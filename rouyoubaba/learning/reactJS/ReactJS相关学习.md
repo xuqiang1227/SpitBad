@@ -11,5 +11,6 @@
 
 #React ES6 写法对照表
 [ES6写法1](http://www.ncloud.hk/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/react-native-es5-and-es6-writing-table/)
+
 [ES6写法2](http://www.itdadao.com/articles/c15a112305p0.html)
 
