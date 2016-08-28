@@ -4,6 +4,7 @@
 
 #生命周期
 [生命周期相关](http://www.jianshu.com/p/4d241032af1f)
+[关于生命周期，代码实现](https://github.com/wenisy/reactJSLifecycle)
 一张图 看懂 react 生命周期
 
 #React ES6 写法对照表
