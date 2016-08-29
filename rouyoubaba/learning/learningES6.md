@@ -25,7 +25,16 @@ module "foo" {
 import foo from "foo";
 foo(); // hello!
 ```
-###`一句话形容就是，使用了 export default后，在 import 这个模块时，可以不加 {}`
+###1.相当于在import一个文件的时候，如果没有写特定的类像`import {abc} from ./abc`，可以直接导入 `./abc` 中default的类，否则就需要加上{}，但是导出时可以有default，也可以没有(react模块要求必须有)，代码可以像这样
+```javascript
+//export, file name : abc.js
+export default class ABC
+export class DEF
+
+//import abc.js
+//这就引入了ABC这个default类以及DEF这个具体的类
+import A, {D} from ./abc.js
+```
 
 * [React中导出模块为何必须要有export default](http://stackoverflow.com/questions/31852933/why-es6-react-component-works-only-with-export-default)
 
@@ -42,9 +51,7 @@ foo(); // hello!
   exports.sayName = function() {
     console.log(name);
   }
-```
-相当于
-```javascript
+  //相当于
   var name = 'nswbmw';
   module.exports.name = name;
   module.exports.sayName = function() {
@@ -57,17 +64,13 @@ foo(); // hello!
 `Babel6`在编译JS文件时，会将 
 ```javascript
 export default XXX
-``` 
-编译为
-```javascript
+//编译为
 export.default = XXX
-```
+``` 
 而在 `Babel5`的时候，会将
 ```javascript
 export default XXX
-```
-编译为
-```javascript
+//编译为
 /**注释的内容是上一行的另一种写法，更易懂*/
 exports['default'] = XXX
 // exports.default = XXX
@@ -78,6 +81,7 @@ module.exports = exports['default'];
 exports.default = XXX
 module.exports = XXX
 ```
+
 `Babel6`在编译的时候，少了最后一行 `module.exports = XXX`
 * 如果有这一行，说明指定了 `module.exports.default = module.exports`
 * module.exports = somethings 是对 module.exports 进行了覆盖，此时 module.exports 和 exports 的关系断裂，module.exports 指向了新的内存块，而 exports 还是指向原来的内存块，为了让 module.exports 和 exports 还是指向同一块内存或者说指向同一个 “对象”，所以我们就 exports = module.exports 。
