@@ -1,7 +1,7 @@
 # ES6 学习
 [What is “export default” in javascript?](http://stackoverflow.com/questions/21117160/what-is-export-default-in-javascript)
-
-##方式一：
+##export default
+###方式一：
 如果用，这种形式导出 `不export default`
 ```javascript
 module "foo" {
@@ -12,7 +12,7 @@ module "foo" {
 ```javascript
 import { y } from "foo";
 ```
-##方式二：
+###方式二：
 如果用，这种形式导出 `export default`
 ```javascript
 module "foo" {
@@ -29,3 +29,7 @@ foo(); // hello!
 *[React中导出模块为何必须要有export default](http://stackoverflow.com/questions/31852933/why-es6-react-component-works-only-with-export-default)
 
 [harmony:modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
+
+##exports 和 module.exports 的区别
+* abcabc
+    * sfsdf
