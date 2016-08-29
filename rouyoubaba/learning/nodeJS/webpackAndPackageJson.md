@@ -1,0 +1,3 @@
+#webpack的external和npm package.json 又install的关系
+webpack的external是在打包的时候，刨除的代码。但是这些代码是在运行时又在npm install中安装的。
+总的来说，我发布一个release的代码，我的代码可能基于bootStrap，但是我发布我的代码是不需要把bootStrap打包进去的，这就用到了webpack的external
