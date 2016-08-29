@@ -3,29 +3,29 @@
 [What is “export default” in javascript?](http://stackoverflow.com/questions/21117160/what-is-export-default-in-javascript)
 
 ###方式一：
-如果用，这种形式导出 `不export default`
+如果用，这种形式导出 `不export default`:
 ```javascript
 module "foo" {
     export let x = 42;
 }
 ```
-就需要用这种形式引入
+就需要用这种形式引入:
 ```javascript
 import { y } from "foo";
 ```
 ###方式二：
-如果用，这种形式导出 `export default`
+如果用，这种形式导出 `export default`:
 ```javascript
 module "foo" {
     export default function() { console.log("hello!") }
 }
 ```
-就需要用这种形式引入
+就需要用这种形式引入:
 ```javascript
 import foo from "foo";
 foo(); // hello!
 ```
-###1.相当于在import一个文件的时候，如果没有写特定的类像`import {abc} from ./abc`，可以直接导入 `./abc` 中default的类，否则就需要加上{}，但是导出时可以有default，也可以没有(react模块要求必须有)，代码可以像这样
+###相当于在import一个文件的时候，如果没有写特定的类像`import {abc} from ./abc`，可以直接导入 `./abc` 中default的类，否则就需要加上{}，但是导出时可以有default，也可以没有(react模块要求必须有)，代码可以像这样:
 ```javascript
 //export, file name : abc.js
 export default class ABC
@@ -61,13 +61,13 @@ import A, {D} from ./abc.js
 
 基于此，在这里需要回答一个问题[为何export default XXX之后，import它的时候，调用它需要 XXX.default](http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default/34778391#34778391)
 
-`Babel6`在编译JS文件时，会将 
+`Babel6`在编译JS文件时，会将:
 ```javascript
 export default XXX
 //编译为
 export.default = XXX
 ``` 
-而在 `Babel5`的时候，会将
+而在 `Babel5`的时候，会将:
 ```javascript
 export default XXX
 //编译为
