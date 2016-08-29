@@ -1,6 +1,7 @@
 # ES6 学习
+##1.export default
 [What is “export default” in javascript?](http://stackoverflow.com/questions/21117160/what-is-export-default-in-javascript)
-##export default
+
 ###方式一：
 如果用，这种形式导出 `不export default`
 ```javascript
@@ -30,7 +31,7 @@ foo(); // hello!
 
 [harmony:modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
 
-##exports 和 module.exports 的区别
+##2.exports 和 module.exports 的区别
 * exports 是指向的 module.exports 的引用
 * module.exports 初始值为一个空对象 {}，所以 exports 初始值也是 {}
 * `require()`也就是`import` 返回的是 module.exports 而不是 exports
