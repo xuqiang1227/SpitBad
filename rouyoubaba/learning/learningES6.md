@@ -51,7 +51,8 @@ foo(); // hello!
   }
 ```
 
-基于此，在这里需要回答一个问题
+基于此，在这里需要回答一个问题[为何export default XXX之后，import它的时候，调用它需要 XXX.default](http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default/34778391#34778391)
+
 `Babel6`在编译JS文件时，会将 
 ```javascript
 export default XXX
@@ -60,7 +61,7 @@ export default XXX
 ```javascript
 export.default = XXX
 ```
-而在 `Babel6`的时候，会将
+而在 `Babel5`的时候，会将
 ```javascript
 export default XXX
 ```
@@ -76,3 +77,7 @@ module.exports = exports['default'];
 exports.default = XXX
 module.exports = XXX
 ```
+`Babel6`在编译的时候，少了最后一行 `module.exports = XXX`
+* 如果有这一行，说明指定了 `module.exports.default = module.exports`
+* module.exports = somethings 是对 module.exports 进行了覆盖，此时 module.exports 和 exports 的关系断裂，module.exports 指向了新的内存块，而 exports 还是指向原来的内存块，为了让 module.exports 和 exports 还是指向同一块内存或者说指向同一个 “对象”，所以我们就 exports = module.exports 。
+* 参考[exports 和 module.exports 的区别](https://cnodejs.org/topic/5231a630101e574521e45ef8)
