@@ -41,6 +41,7 @@ import A, {D} from ./abc.js
 [harmony:modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
 
 ##2.exports 和 module.exports 的区别
+* 参考[exports 和 module.exports 的区别](https://cnodejs.org/topic/5231a630101e574521e45ef8)
 * exports 是指向的 module.exports 的引用
 * module.exports 初始值为一个空对象 {}，所以 exports 初始值也是 {}
 * `require()`也就是`import` 返回的是 module.exports 而不是 exports
@@ -59,7 +60,11 @@ import A, {D} from ./abc.js
   }
 ```
 
-基于此，在这里需要回答一个问题[为何export default XXX之后，import它的时候，调用它需要 XXX.default](http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default/34778391#34778391)
+基于此，在这里需要回答一个问题[用Babel6编译文件后，为何export default XXX之后，import它的时候，调用它需要 XXX.default](http://stackoverflow.com/questions/34736771/webpack-umd-library-return-object-default/34778391#34778391)
+
+[中文答案](https://segmentfault.com/a/1190000004301150)
+大致是说，因为缺少了，`modules.export = XXX` 所以，Babel6只支持import的写法，不再支持require()，并且不再支持`解构`([请戳我了解什么是ES6解构Destructuring](http://www.infoq.com/cn/articles/es6-in-depth-destructuring/))
+区别代码如下：
 
 `Babel6`在编译JS文件时，会将:
 ```javascript
@@ -83,6 +88,4 @@ module.exports = XXX
 ```
 
 `Babel6`在编译的时候，少了最后一行 `module.exports = XXX`
-* 如果有这一行，说明指定了 `module.exports.default = module.exports`
-* module.exports = somethings 是对 module.exports 进行了覆盖，此时 module.exports 和 exports 的关系断裂，module.exports 指向了新的内存块，而 exports 还是指向原来的内存块，为了让 module.exports 和 exports 还是指向同一块内存或者说指向同一个 “对象”，所以我们就 exports = module.exports 。
-* 参考[exports 和 module.exports 的区别](https://cnodejs.org/topic/5231a630101e574521e45ef8)
+* 如果有这一行，说明继续支持require()的写法，也就是可以解构……
