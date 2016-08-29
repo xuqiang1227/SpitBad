@@ -55,15 +55,16 @@ foo(); // hello!
 `Babel6`在编译JS文件时，会将 
 ```javascript
 export default XXX
-``` 编译为
+``` 
+编译为
 ```javascript
 export.default = XXX
 ```
-而在 `Babel6`的时候，会将 `export default XXX` 编译为 `export.default = XXX`
+而在 `Babel6`的时候，会将
 ```javascript
 export default XXX
 ```
-
+编译为
 ```javascript
 /**注释的内容是上一行的另一种写法，更易懂*/
 exports['default'] = XXX
