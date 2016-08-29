@@ -24,5 +24,7 @@ module "foo" {
 import foo from "foo";
 foo(); // hello!
 ```
+`一句话形容就是，使用了 export default后，在 import 这个模块时，可以不加 {}`
+*[React中导出模块为何必须要有export default](http://stackoverflow.com/questions/31852933/why-es6-react-component-works-only-with-export-default)
 
 [harmony:modules](http://wiki.ecmascript.org/doku.php?id=harmony:modules)
