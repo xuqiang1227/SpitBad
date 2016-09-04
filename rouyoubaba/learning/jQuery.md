@@ -6,6 +6,12 @@
   $("div").text("isFormParent = " + isFormParent);
 ```
 
+* jQuery 遍历 - has() 方法，检测某个元素是否在另一个元素中：
+```javascript
+  $("ul").append("<li>" + ($("ul").has("li").length ? "Yes" : "No") + "</li>"); //输出YES
+  $("ul").has("li").addClass("full"); //ul增加一个class="full"
+```
+
 * jQuery 遍历 - siblings() 方法，查找每个 p 元素的所有类名为 "selected" 的所有同级元素，并将背景色置为yellow：
 ```javascript
 $("p").siblings(".selected").css("background", "yellow")
@@ -21,4 +27,3 @@ $( e.target ).closest("li")
 ```javascript
 const linkDom = $(e.currentTarget).find('.toggle-icon').addBack('.toggle-icon');
 ```
-
