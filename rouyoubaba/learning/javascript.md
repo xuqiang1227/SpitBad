@@ -9,4 +9,22 @@ It's also important to note that the event object contains a property called ori
 * “DOMMouseScroll” 事件中的 “event.detail” 属性值：返回的值，如果是负值说明滚轮是向上滚动（与 “event.wheelDelta” 正好相反），如果是正值说明滚轮是向下滚动；返回的值，均为 3 的倍数，即：幅度大小 = 返回的值 / 3。
 * “mousewheel” 事件在 Opera 10+ 中却是个特例，既有 “event.wheelDelta” 属性，也有 “event.detail” 属性。
 
+```javascript
+$('#abs').bind('mousewheel DOMMouseScroll', function(e) {
+    var scrollTo = null;
+
+    if (e.type == 'mousewheel') {
+        scrollTo = (e.originalEvent.wheelDelta * -1);
+    }
+    else if (e.type == 'DOMMouseScroll') {
+        scrollTo = 40 * e.originalEvent.detail;
+    }
+
+    if (scrollTo) {
+        e.preventDefault();
+        $(this).scrollTop(scrollTo + $(this).scrollTop());
+    }
+});
+```
+
 [http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/](http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/)
