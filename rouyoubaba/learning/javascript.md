@@ -10,21 +10,22 @@ It's also important to note that the event object contains a property called ori
 * “mousewheel” 事件在 Opera 10+ 中却是个特例，既有 “event.wheelDelta” 属性，也有 “event.detail” 属性。
 
 ```javascript
-$('#abs').bind('mousewheel DOMMouseScroll', function(e) {
+$('#abs').bind('mousewheel DOMMouseScroll', (e)=> {
     var scrollTo = null;
 
     if (e.type == 'mousewheel') {
-        scrollTo = (e.originalEvent.wheelDelta * -1);
+        scrollTo = (e.originalEvent.wheelDelta * -1); //因为 mousewheel和DOMMouseScroll里取到的wheelDelta和detail方向的正负是相反的，所以 * -1
     }
     else if (e.type == 'DOMMouseScroll') {
-        scrollTo = 40 * e.originalEvent.detail;
+        scrollTo = 40 * e.originalEvent.detail;//因为 wheelDelta 的值滚动一次增加120，detail的值滚动一次增加3，相差40倍，所以 *40
     }
 
     if (scrollTo) {
         e.preventDefault();
-        $(this).scrollTop(scrollTo + $(this).scrollTop());
+        e.currentTarget.scrollTop += scrollTo;
     }
 });
 ```
+[如果内层div滚动到底了，不滚动外部结构](https://ruby-china.org/topics/10249)
 
-[http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/](http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/)
+[浅谈 Mousewheel 事件](http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/)
