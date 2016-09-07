@@ -22,7 +22,7 @@ $('#abs').bind('mousewheel DOMMouseScroll', (e)=> {
 
     if (scrollTo) {
         e.preventDefault();
-        e.currentTarget.scrollTop += scrollTo;
+        e.currentTarget.scrollTop += scrollTo;//当前位置 = 滚动的位置+当前位置
     }
 });
 ```
