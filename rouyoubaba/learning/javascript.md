@@ -32,4 +32,5 @@ $('#abs').bind('mousewheel DOMMouseScroll', (e)=> {
 
 # 移动端滚动穿透问题
 [最强解释](https://github.com/pod4g/tool/wiki/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98f)
+
 比上面介绍的阻止弹出框底部继续滚动的方式要更好一些
