@@ -29,3 +29,8 @@ $('#abs').bind('mousewheel DOMMouseScroll', (e)=> {
 [如果内层div滚动到底了，不滚动外部结构](https://ruby-china.org/topics/10249)
 
 [浅谈 Mousewheel 事件](http://www.planabc.net/2010/08/12/mousewheel_event_in_javascript/)
+
+# 移动端滚动穿透问题
+[最强解释](https://github.com/pod4g/tool/wiki/%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%BB%9A%E5%8A%A8%E7%A9%BF%E9%80%8F%E9%97%AE%E9%A2%98f)
+
+比上面介绍的阻止弹出框底部继续滚动的方式要更好一些
