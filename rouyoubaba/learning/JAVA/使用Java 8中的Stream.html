@@ -1,0 +1,1161 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css"/>
+
+
+
+
+  <link href="//fonts.googleapis.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=0.5.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java 8, Stream API" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Think And Code" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/my-favicon.png?v=0.5.0" />
+
+
+
+
+
+
+<meta name="description" content="本文链接为：http://nkcoder.github.io/2016/01/24/java-8-stream-api/  ，转载请注明出处，谢谢！
+
+Stream是Java 8 提供的高效操作集合类（Collection）数据的API。
+1. 从Iterator到Stream有一个字符串的list，要统计其中长度大于7的字符串的数量，用迭代来实现：
+List&amp;lt;String&amp;gt; word">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Java 8中的Stream">
+<meta property="og:url" content="http://nkcoder.github.io/2016/01/24/java-8-stream-api/index.html">
+<meta property="og:site_name" content="Think And Code">
+<meta property="og:description" content="本文链接为：http://nkcoder.github.io/2016/01/24/java-8-stream-api/  ，转载请注明出处，谢谢！
+
+Stream是Java 8 提供的高效操作集合类（Collection）数据的API。
+1. 从Iterator到Stream有一个字符串的list，要统计其中长度大于7的字符串的数量，用迭代来实现：
+List&amp;lt;String&amp;gt; word">
+<meta property="og:updated_time" content="2016-04-10T15:00:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用Java 8中的Stream">
+<meta name="twitter:description" content="本文链接为：http://nkcoder.github.io/2016/01/24/java-8-stream-api/  ，转载请注明出处，谢谢！
+
+Stream是Java 8 提供的高效操作集合类（Collection）数据的API。
+1. 从Iterator到Stream有一个字符串的list，要统计其中长度大于7的字符串的数量，用迭代来实现：
+List&amp;lt;String&amp;gt; word">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: 'Author'
+    }
+  };
+</script>
+
+  <title> 使用Java 8中的Stream | Think And Code </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-70609669-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Think And Code</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Salvation lies within!</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home fa-fw"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th fa-fw"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive fa-fw"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags fa-fw"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                使用Java 8中的Stream
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">Posted on</span>
+            <time itemprop="dateCreated" datetime="2016-01-24T20:45:15+08:00" content="2016-01-24">
+              2016-01-24
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Backend/" itemprop="url" rel="index">
+                    <span itemprop="name">Backend</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/01/24/java-8-stream-api/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/01/24/java-8-stream-api/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/01/24/java-8-stream-api/" class="leancloud_visitors" data-flag-title="使用Java 8中的Stream">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">visitors </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文链接为：<a href="http://nkcoder.github.io/2016/01/24/java-8-stream-api/">http://nkcoder.github.io/2016/01/24/java-8-stream-api/</a>  ，转载请注明出处，谢谢！</p>
+</blockquote>
+<p>Stream是Java 8 提供的高效操作集合类（Collection）数据的API。</p>
+<h2 id="1-__u4ECEIterator_u5230Stream"><a href="#1-__u4ECEIterator_u5230Stream" class="headerlink" title="1. 从Iterator到Stream"></a>1. 从Iterator到Stream</h2><p>有一个字符串的list，要统计其中长度大于7的字符串的数量，用迭代来实现：</p>
+<pre><code>List&lt;String&gt; wordList = Arrays.asList(&quot;regular&quot;, &quot;expression&quot;, &quot;specified&quot;, &quot;as&quot;, &quot;a&quot;,
+    &quot;string&quot;, &quot;must&quot;);
+
+int countByIterator = 0;
+for (String word: wordList) {
+    if (word.length() &gt; 7) {
+        countByIterator++;
+    }
+}
+</code></pre><a id="more"></a>
+<p>用Stream实现：</p>
+<pre><code>long countByStream = wordList.stream().filter(w -&gt; w.length() &gt; 7).count();
+</code></pre><p>显然，用stream实现更简洁，不仅如此，stream很容易实现并发操作，比如：</p>
+<pre><code>long countByParallelStream = wordList.parallelStream().
+    filter(w -&gt; w.length() &gt; 7).count();
+</code></pre><p>stream遵循的原则是：告诉我做什么，不用管我怎么做。比如上例：告诉stream通过多线程统计字符串长度，至于以什么顺序、在哪个线程中执行，由stream来负责；而在迭代实现中，由于计算的方式已确定，很难优化了。</p>
+<p>Stream和Collection的区别主要有：</p>
+<ol>
+<li>stream本身并不存储数据，数据是存储在对应的collection里，或者在需要的时候才生成的；</li>
+<li>stream不会修改数据源，总是返回新的stream；</li>
+<li>stream的操作是懒执行(lazy)的：仅当最终的结果需要的时候才会执行，比如上面的例子中，结果仅需要前3个长度大于7的字符串，那么在找到前3个长度符合要求的字符串后，<code>filter()</code>将停止执行；</li>
+</ol>
+<p>使用stream的步骤如下：</p>
+<ol>
+<li>创建stream；</li>
+<li>通过一个或多个中间操作(intermediate operations)将初始stream转换为另一个stream；</li>
+<li>通过中止操作(terminal operation)获取结果；该操作触发之前的懒操作的执行，中止操作后，该stream关闭，不能再<br>使用了；</li>
+</ol>
+<p>在上面的例子中，<code>wordList.stream()</code>和<code>wordList.parallelStream()</code>是创建stream，<code>filter()</code>是中间操作，过滤后生成一个新的stream，<code>count()</code>是中止操作，获取结果。</p>
+<h2 id="2-__u521B_u5EFAStream_u7684_u65B9_u5F0F"><a href="#2-__u521B_u5EFAStream_u7684_u65B9_u5F0F" class="headerlink" title="2. 创建Stream的方式"></a>2. 创建Stream的方式</h2><p>1) 从array或list创建stream：</p>
+<pre><code>Stream&lt;Integer&gt; integerStream = Stream.of(10, 20, 30, 40);
+String[] cityArr = {&quot;Beijing&quot;, &quot;Shanghai&quot;, &quot;Chengdu&quot;};
+Stream&lt;String&gt; cityStream = Stream.of(cityArr);
+Stream&lt;String&gt; nameStream = Arrays.asList(&quot;Daniel&quot;, &quot;Peter&quot;, &quot;Kevin&quot;).
+    stream();
+Stream&lt;String&gt; cityStream2 = Arrays.stream(cityArr, 0, 1);
+Stream&lt;String&gt; emptyStream = Stream.empty();
+</code></pre><p>2) 通过<code>generate</code>和<code>iterate</code>创建无穷stream：</p>
+<pre><code>Stream&lt;String&gt; echos = Stream.generate(() -&gt; &quot;echo&quot;);
+Stream&lt;Integer&gt; integers = Stream.iterate(0, num -&gt; num + 1);
+</code></pre><p>3) 通过其它API创建stream：</p>
+<pre><code>Stream&lt;String&gt; lines = Files.lines(Paths.get(&quot;test.txt&quot;))
+
+String content = &quot;AXDBDGXC&quot;;
+Stream&lt;String&gt; contentStream = Pattern.compile(&quot;[ABC]{1,3}&quot;).
+    splitAsStream(content);
+</code></pre><h2 id="3-_Stream_u8F6C_u6362"><a href="#3-_Stream_u8F6C_u6362" class="headerlink" title="3. Stream转换"></a>3. Stream转换</h2><p>1) <code>filter()</code>用于过滤，即使原stream中满足条件的元素构成新的stream：</p>
+<pre><code>List&lt;String&gt; langList = Arrays.asList(&quot;Java&quot;, &quot;Python&quot;, &quot;Swift&quot;, &quot;HTML&quot;);
+Stream&lt;String&gt; filterStream = langList.stream().filter(lang -&gt; lang.equalsIgnoreCase(&quot;java&quot;));
+</code></pre><p>2) <code>map()</code>用于映射，遍历原stream中的元素，转换后构成新的stream：</p>
+<pre><code>List&lt;String&gt; langList = Arrays.asList(&quot;Java&quot;, &quot;Python&quot;, &quot;Swift&quot;, &quot;HTML&quot;);
+Stream&lt;String&gt; mapStream = langList.stream().map(String::toUpperCase);
+</code></pre><p>3) <code>flatMap()</code>用于将<code>[[&quot;ABC&quot;, &quot;DEF&quot;], [&quot;FGH&quot;, &quot;IJK&quot;]]</code>的形式转换为<br><code>[&quot;ABC&quot;, &quot;DEF&quot;, &quot;FGH&quot;, &quot;IJK&quot;]</code>：</p>
+<pre><code>Stream&lt;String&gt; cityStream = Stream.of(&quot;Beijing&quot;, &quot;Shanghai&quot;, &quot;Shenzhen&quot;);
+// [[&apos;B&apos;, &apos;e&apos;, &apos;i&apos;, &apos;j&apos;, &apos;i&apos;, &apos;n&apos;, &apos;g&apos;], [&apos;S&apos;, &apos;h&apos;, &apos;a&apos;, &apos;n&apos;, &apos;g&apos;, &apos;h&apos;, &apos;a&apos;, &apos;i&apos;], ...]
+Stream&lt;Stream&lt;Character&gt;&gt; characterStream1 = cityStream.
+    map(city -&gt; characterStream(city));
+
+Stream&lt;String&gt; cityStreamCopy = Stream.of(&quot;Beijing&quot;, &quot;Shanghai&quot;, &quot;Shenzhen&quot;);
+// [&apos;B&apos;, &apos;e&apos;, &apos;i&apos;, &apos;j&apos;, &apos;i&apos;, &apos;n&apos;, &apos;g&apos;, &apos;S&apos;, &apos;h&apos;, &apos;a&apos;, &apos;n&apos;, &apos;g&apos;, &apos;h&apos;, &apos;a&apos;, &apos;i&apos;, ...]
+Stream&lt;Character&gt; characterStreamCopy = cityStreamCopy.
+    flatMap(city -&gt; characterStream(city));
+</code></pre><blockquote>
+<p>其中，<code>characterStream()</code>返回有参数字符串的字符构成的Stream<character>;</character></p>
+</blockquote>
+<p>4)  <code>limit()</code>表示限制stream中元素的数量，<code>skip()</code>表示跳过stream中前几个元素，<code>concat</code>表示将多个stream连接<br>起来，<code>peek()</code>主要用于debug时查看stream中元素的值：</p>
+<pre><code>Stream&lt;Integer&gt; limitStream = Stream.of(18, 20, 12, 35, 89).sorted().limit(3);
+Stream&lt;Integer&gt; skipStream = Stream.of(18, 20, 12, 35, 89).sorted(Comparator.reverseOrder())
+    .skip(1);
+Stream&lt;Integer&gt; concatStream = Stream.concat(Stream.of(1, 2, 3), Stream.of(4, 5, 6));
+concatStream.peek(i -&gt; System.out.println(i)).count();
+</code></pre><blockquote>
+<p><code>peek()</code>是<strong>intermediate operation</strong>，所以后面需要一个<strong>terminal operation</strong>，如<code>count()</code>才能在输出中<br>看到结果；</p>
+</blockquote>
+<p>5) 有状态的(stateful)转换，即元素之间有依赖关系，如<code>distinct()</code>返回由唯一元素构成的stream，<code>sorted()</code>返回排<br>序后的stream：</p>
+<pre><code>Stream&lt;String&gt; distinctStream = Stream.of(&quot;Beijing&quot;, &quot;Tianjin&quot;, &quot;Beijing&quot;).distinct();
+Stream&lt;String&gt; sortedStream = Stream.of(&quot;Beijing&quot;, &quot;Shanghai&quot;, &quot;Chengdu&quot;)
+    .sorted(Comparator.comparing(String::length).reversed());
+</code></pre><h2 id="4-_Stream_reduction"><a href="#4-_Stream_reduction" class="headerlink" title="4. Stream reduction"></a>4. Stream reduction</h2><p><code>reduction</code>就是从stream中取出结果，是<code>terminal operation</code>，因此经过<code>reduction</code>后的stream不能再使用了。</p>
+<h3 id="4-1_Optional"><a href="#4-1_Optional" class="headerlink" title="4.1 Optional"></a>4.1 Optional</h3><p>Optional<t>表示或者有一个T类型的对象，或者没有值；</t></p>
+<p>1) 创建Optional对象：</p>
+<p>直接通过Optional的类方法：<code>of()</code>/<code>empty()</code>/<code>ofNullable()</code>：</p>
+<pre><code>Optional&lt;Integer&gt; intOpt = Optional.of(10);
+Optional&lt;String&gt; emptyOpt = Optional.empty();
+Optional&lt;Double&gt; doubleOpt = Optional.ofNullable(5.5);
+</code></pre><p>2) 使用Optional对象：</p>
+<p>你当然可以这么使用：</p>
+<pre><code>if (intOpt.isPresent()) {
+    intOpt.get();
+}
+</code></pre><p>但是，最好这么使用：</p>
+<pre><code>doubleOpt.orElse(0.0);
+doubleOpt.orElseGet(() -&gt; 1.0);
+doubleOpt.orElseThrow(RuntimeException::new);
+List&lt;Double&gt; doubleList = new ArrayList&lt;&gt;();
+doubleOpt.ifPresent(doubleList::add);
+</code></pre><p><code>map()</code>方法与<code>ifPresent()</code>用法相同，就是多个返回值，<code>flatMap()</code>用于Optional的链式表达：</p>
+<pre><code>Optional&lt;Boolean&gt; addOk = doubleOpt.map(doubleList::add);
+Optional.of(4.0).flatMap(num -&gt; Optional.ofNullable(num * 100))
+    .flatMap(num -&gt; Optional.ofNullable(Math.sqrt(num)));
+</code></pre><h3 id="4-2__u7B80_u5355_u7684reduction"><a href="#4-2__u7B80_u5355_u7684reduction" class="headerlink" title="4.2 简单的reduction"></a>4.2 简单的reduction</h3><p>主要包含以下操作： <code>findFirst()</code>/<code>findAny()</code>/<code>allMatch</code>/<code>anyMatch()</code>/<code>noneMatch</code>，比如：</p>
+<pre><code>Optional&lt;String&gt; firstWord = wordStream.filter(s -&gt; s.startsWith(&quot;Y&quot;)).findFirst();
+Optional&lt;String&gt; anyWord = wordStream.filter(s -&gt; s.length() &gt; 3).findAny();
+wordStream.allMatch(s -&gt; s.length() &gt; 3);
+wordStream.anyMatch(s -&gt; s.length() &gt; 3);
+wordStream.noneMatch(s -&gt; s.length() &gt; 3);
+</code></pre><h3 id="4-3_reduce_u65B9_u6CD5"><a href="#4-3_reduce_u65B9_u6CD5" class="headerlink" title="4.3 reduce方法"></a>4.3 reduce方法</h3><p>1) <code>reduce(accumulator)</code>：参数是一个执行双目运算的<code>Functional Interface</code>，假如这个参数表示的操作为op，<br>stream中的元素为x, y, z, …，则<code>reduce()</code>执行的就是<code>x op y op z ...</code>，所以要求op这个操作具有结合性<br>(associative)，即满足：<code>(x op y) op z = x op (y op z)</code>，满足这个要求的操作主要有：求和、求积、求最大值、<br>求最小值、字符串连接、集合并集和交集等。另外，该函数的返回值是Optional的：</p>
+<pre><code>Optional&lt;Integer&gt; sum1 = numStream.reduce((x, y) -&gt; x + y);
+</code></pre><p>2) <code>reduce(identity, accumulator)</code>：可以认为第一个参数为默认值，但需要满足<code>identity op x = x</code>，所以对于求<br>和操作，<code>identity</code>的值为0，对于求积操作，<code>identity</code>的值为1。返回值类型是stream元素的类型：</p>
+<pre><code>Integer sum2 = numStream.reduce(0, Integer::sum);
+</code></pre><h2 id="5-_collect_u7ED3_u679C"><a href="#5-_collect_u7ED3_u679C" class="headerlink" title="5. collect结果"></a>5. collect结果</h2><p>1) <code>collect()</code>方法：</p>
+<p><code>reduce()</code>和<code>collect()</code>的区别是：</p>
+<ul>
+<li><code>reduce()</code>的结果是一个值；</li>
+<li><code>collect()</code>可以对stream中的元素进行各种处理后，得到stream中元素的值；</li>
+</ul>
+<p><code>Collectors</code>接口提供了很方便的创建<code>Collector</code>对象的工厂方法：</p>
+<pre><code>// collect to Collection
+Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).collect(Collectors.toList());
+Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).collect(Collectors.toSet());
+Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).collect(Collectors.toCollection(TreeSet::new));
+// join element
+Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).collect(Collectors.joining());
+Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).collect(Collectors.joining(&quot;, &quot;));
+// summarize element
+IntSummaryStatistics summary = Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;)
+    .collect(Collectors.summarizingInt(String::length));
+summary.getMax();
+</code></pre><p>2) <code>foreach()</code>方法：</p>
+<p><code>foreach()</code>用于遍历stream中的元素，属于<code>terminal operation</code>；<br><code>forEachOrdered()</code>是按照stream中元素的顺序遍历，也就无法利用并发的优势；</p>
+<pre><code>Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;, &quot;you&quot;, &quot;can&quot;, &quot;fly&quot;).parallel()
+    .forEach(w -&gt; System.out.println(w));
+Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;, &quot;you&quot;, &quot;can&quot;, &quot;fly&quot;)
+    .forEachOrdered(w -&gt; System.out.println(w));
+</code></pre><p>3) <code>toArray()</code>方法：</p>
+<p>得到由stream中的元素得到的数组，默认是Object[]，可以通过参数设置需要结果的类型：</p>
+<pre><code>Object[] words1 = Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).toArray();
+String[] words2 = Stream.of(&quot;You&quot;, &quot;may&quot;, &quot;assume&quot;).toArray(String[]::new);
+</code></pre><p>4) <code>toMap()</code>方法：</p>
+<p><code>toMap</code>: 将stream中的元素映射为<key, value="">的形式，两个参数分别用于生成对应的key和value的值。比如有一个字符串stream，将首字母作为key，字符串值作为value，得到一个map：</key,></p>
+<pre><code>Stream&lt;String&gt; introStream = Stream.
+of(&quot;Get started with UICollectionView and the photo library&quot;.split(&quot; &quot;));
+Map&lt;String, String&gt; introMap =
+    introStream.collect(Collectors.toMap(s -&gt; s.substring(0, 1), s -&gt; s));
+</code></pre><p>如果一个key对应多个value，则会抛出异常，需要使用第三个参数设置如何处理冲突，比如仅使用原来的value、使用新的value，或者合并：</p>
+<pre><code>Stream&lt;String&gt; introStream = Stream.of(&quot;Get started with UICollectionView and the photo library&quot;
+    .split(&quot; &quot;));
+Map&lt;Integer, String&gt; introMap2 = introStream.collect(Collectors.toMap(s -&gt; s.length(),
+    s -&gt; s, (existingValue, newValue) -&gt; existingValue));
+</code></pre><p>如果value是一个集合，即将key对应的所有value放到一个集合中，则需要使用第三个参数，将多个value合并：</p>
+<pre><code>Stream&lt;String&gt; introStream3 = Stream.of(&quot;Get started with UICollectionView and the photo library&quot;
+    .split(&quot; &quot;));
+Map&lt;Integer, Set&lt;String&gt;&gt; introMap3 = introStream3.collect(Collectors.toMap(s -&gt; s.length(),
+        s -&gt; Collections.singleton(s), (existingValue, newValue) -&gt; {
+            HashSet&lt;String&gt; set = new HashSet&lt;&gt;(existingValue);
+            set.addAll(newValue);
+            return set;
+        }
+    ));
+introMap3.forEach((k, v) -&gt; System.out.println(k + &quot;: &quot; + v));
+</code></pre><p>如果value是对象自身，则使用<code>Function.identity()</code>，如：</p>
+<pre><code>Map&lt;Integer, Person&gt; idToPerson = people.collect(Collectors
+    .toMap(Person::getId, Function.identity()));
+</code></pre><p><code>toMap()</code>默认返回的是HashMap，如果需要其它类型的map，比如TreeMap，则可以在第四个参数指定构造方法：</p>
+<pre><code>Map&lt;Integer, String&gt; introMap2 = introStream.collect(
+    Collectors.toMap(s -&gt; s.length(), s -&gt; s, (existingValue, newValue)
+        -&gt; existingValue, TreeMap::new));
+</code></pre><h2 id="6-_Grouping_u548CPartitioning"><a href="#6-_Grouping_u548CPartitioning" class="headerlink" title="6. Grouping和Partitioning"></a>6. Grouping和Partitioning</h2><p>1)  <code>groupingBy()</code>表示根据某一个字段或条件进行分组，返回一个Map，其中key为分组的字段或条件，value默认为list，<code>groupingByConcurrent()</code>是其并发版本：</p>
+<pre><code>Map&lt;String, List&lt;Locale&gt;&gt; countryToLocaleList = Stream.of(Locale.getAvailableLocales())
+    .collect(Collectors.groupingBy(l -&gt; l.getDisplayCountry()));
+</code></pre><p>2) 如果<code>groupingBy()</code>分组的依据是一个bool条件，则key的值为true/false，此时与<code>partitioningBy()</code>等价，且<br><code>partitioningBy()</code>的效率更高：</p>
+<pre><code>// predicate
+Map&lt;Boolean, List&lt;Locale&gt;&gt; englishAndOtherLocales = Stream.of(Locale.getAvailableLocales())
+    .collect(Collectors.groupingBy(l -&gt; l.getDisplayLanguage().equalsIgnoreCase(&quot;English&quot;)));
+
+// partitioningBy
+Map&lt;Boolean, List&lt;Locale&gt;&gt; englishAndOtherLocales2 = Stream.of(Locale.getAvailableLocales())
+    .collect(Collectors.partitioningBy(l -&gt; l.getDisplayLanguage().equalsIgnoreCase(&quot;English&quot;)));
+</code></pre><p>3) <code>groupingBy()</code>提供第二个参数，表示<code>downstream</code>，即对分组后的value作进一步的处理：</p>
+<p>返回set，而不是list：</p>
+<pre><code>Map&lt;String, Set&lt;Locale&gt;&gt; countryToLocaleSet = Stream.of(Locale.getAvailableLocales())
+          .collect(Collectors.groupingBy(l -&gt; l.getDisplayCountry(), Collectors.toSet()));
+</code></pre><p>返回value集合中元素的数量：</p>
+<pre><code>Map&lt;String, Long&gt; countryToLocaleCounts = Stream.of(Locale.getAvailableLocales())
+          .collect(Collectors.groupingBy(l -&gt; l.getDisplayCountry(), Collectors.counting()));
+</code></pre><p>对value集合中的元素求和：</p>
+<pre><code>Map&lt;String, Integer&gt; cityToPopulationSum = Stream.of(cities)
+        .collect(Collectors.groupingBy(City::getName, Collectors.summingInt(City::getPopulation)));
+</code></pre><p>对value的某一个字段求最大值，注意value是Optional的：</p>
+<pre><code>Map&lt;String, Optional&lt;City&gt;&gt; cityToPopulationMax = Stream.of(cities)
+        .collect(Collectors.groupingBy(City::getName,
+            Collectors.maxBy(Comparator.comparing(City::getPopulation))));
+</code></pre><p>使用mapping对value的字段进行map处理：</p>
+<pre><code>Map&lt;String, Optional&lt;String&gt;&gt; stateToNameMax = Stream.of(cities)
+    .collect(Collectors.groupingBy(City::getState, Collectors.mapping(City::getName,
+        Collectors.maxBy(Comparator.comparing(String::length)))));
+
+Map&lt;String, Set&lt;String&gt;&gt; stateToNameSet = Stream.of(cities)
+.collect(Collectors.groupingBy(City::getState,
+    Collectors.mapping(City::getName, Collectors.toSet())));
+</code></pre><p>通过<code>summarizingXXX</code>获取统计结果：</p>
+<pre><code>Map&lt;String, IntSummaryStatistics&gt; stateToPopulationSummary = Stream.of(cities)
+    .collect(Collectors.groupingBy(City::getState, Collectors.summarizingInt(City::getPopulation)));
+</code></pre><p><code>reducing()</code>可以对结果作更复杂的处理，但是<code>reducing()</code>却并不常用：</p>
+<pre><code>Map&lt;String, String&gt; stateToNameJoining = Stream.of(cities)
+    .collect(Collectors.groupingBy(City::getState, Collectors.reducing(&quot;&quot;, City::getName,
+        (s, t) -&gt; s.length() == 0 ? t : s + &quot;, &quot; + t)));
+</code></pre><p>比如上例可以通过mapping达到同样的效果：</p>
+<pre><code>Map&lt;String, String&gt; stateToNameJoining2 = Stream.of(cities)
+        .collect(Collectors.groupingBy(City::getState,
+            Collectors.mapping(City::getName, Collectors.joining(&quot;, &quot;)
+        )));
+</code></pre><h2 id="7-_Primitive_Stream"><a href="#7-_Primitive_Stream" class="headerlink" title="7. Primitive Stream"></a>7. Primitive Stream</h2><p><code>Stream&lt;Integer&gt;</code>对应的Primitive Stream就是<code>IntStream</code>，类似的还有<code>DoubleStream</code>和<code>LongStream</code>。</p>
+<p>1) Primitive Stream的构造：<code>of()</code>, <code>range()</code>, <code>rangeClosed()</code>, <code>Arrays.stream()</code>:</p>
+<pre><code>IntStream intStream = IntStream.of(10, 20, 30);
+IntStream zeroToNintyNine = IntStream.range(0, 100);
+IntStream zeroToHundred = IntStream.rangeClosed(0, 100);
+double[] nums = {10.0, 20.0, 30.0};
+DoubleStream doubleStream = Arrays.stream(nums, 0, 3);
+</code></pre><p>2) Object Stream与Primitive Stream之间的相互转换，通过<code>mapToXXX()</code>和<code>boxed()</code>：</p>
+<pre><code>// map to
+Stream&lt;String&gt; cityStream = Stream.of(&quot;Beijing&quot;, &quot;Tianjin&quot;, &quot;Chengdu&quot;);
+IntStream lengthStream = cityStream.mapToInt(String::length);
+
+// box
+Stream&lt;Integer&gt; oneToNine = IntStream.range(0, 10).boxed();
+</code></pre><p>3) 与Object Stream相比，Primitive Stream的特点：</p>
+<p><code>toArray()</code>方法返回的是对应的Primitive类型：</p>
+<pre><code>int[] intArr = intStream.toArray();
+</code></pre><p>自带统计类型的方法，如：<code>max()</code>, <code>average()</code>, <code>summaryStatistics()</code>:</p>
+<pre><code>OptionalInt maxNum = intStream.max();
+IntSummaryStatistics intSummary = intStream.summaryStatistics();
+</code></pre><h2 id="8-_Parallel_Stream"><a href="#8-_Parallel_Stream" class="headerlink" title="8. Parallel Stream"></a>8. Parallel Stream</h2><p>1) Stream支持并发操作，但需要满足以下几点：</p>
+<p>构造一个paralle stream，默认构造的stream是顺序执行的，调用<code>paralle()</code>构造并行的stream：</p>
+<pre><code>IntStream scoreStream = IntStream.rangeClosed(10, 30).parallel();
+</code></pre><p>要执行的操作必须是可并行执行的，即并行执行的结果和顺序执行的结果是一致的，而且必须保证stream中执行的操作是线程安全的：</p>
+<pre><code>int[] wordLength = new int[12];
+Stream.of(&quot;It&quot;, &quot;is&quot;, &quot;your&quot;, &quot;responsibility&quot;).parallel().forEach(s -&gt; {
+    if (s.length() &lt; 12) wordLength[s.length()]++;
+});
+</code></pre><p>这段程序的问题在于，多线程访问共享数组<code>wordLength</code>，是非线程安全的。解决的思路有：1）构造AtomicInteger数组；2）使用<code>groupingBy()</code>根据length统计；</p>
+<p>2) 可以通过并行提高效率的常见场景：</p>
+<p>使stream无序：对于<code>distinct()</code>和<code>limit()</code>等方法，如果不关心顺序，则可以使用并行：</p>
+<pre><code>LongStream.rangeClosed(5, 10).unordered().parallel().limit(3);
+IntStream.of(14, 15, 15, 14, 12, 81).unordered().parallel().distinct();
+</code></pre><p>在<code>groupingBy()</code>的操作中，map的合并操作是比较重的，可以通过<code>groupingByConcurrent()</code>来并行处理，不过前提是parallel stream：</p>
+<pre><code>Stream.of(cities).parallel().collect(Collectors.groupingByConcurrent(City::getState));
+</code></pre><p>在执行stream操作时不能修改stream对应的collection；</p>
+<p>stream本身是不存储数据的，数据保存在对应的collection中，所以在执行stream操作的同时修改对应的collection，结果是未定义的：</p>
+<pre><code>// ok
+Stream&lt;String&gt; wordStream = wordList.stream();
+wordList.add(&quot;number&quot;);
+wordStream.distinct().count();
+
+// ConcurrentModificationException
+Stream&lt;String&gt; wordStream = wordList.stream();
+wordStream.forEach(s -&gt; { if (s.length() &gt;= 6) wordList.remove(s);});
+</code></pre><h2 id="9-_Functional_Interface"><a href="#9-_Functional_Interface" class="headerlink" title="9. Functional Interface"></a>9. Functional Interface</h2><p>仅包含一个抽象方法的interface被成为<code>Functional Interface</code>，比如：<code>Predicate</code>, <code>Function</code>, <code>Consumer</code>等。<br>此时我们一般传入一个lambda表达式或<code>Method Reference</code>。</p>
+<p>常见的<code>Functional Interface</code>有：</p>
+<pre><code>Functional Interface     Parameter     Return Type     Description Types
+Supplier&lt;T&gt;             None         T                Supplies a value of type T
+Consumer&lt;T&gt;             T             void            Consumes a value of type T
+BiConsumer&lt;T, U&gt;         T,U         void            Consumes values of types T and U
+Predicate&lt;T&gt;             T            boolean            A Boolean-valued function
+ToIntFunction&lt;T&gt;         T             int                An int-, long-, or double-valued function
+ToLongFunction&lt;T&gt;         T            long
+ToDoubleFunction&lt;T&gt;     T            double
+IntFunction&lt;R&gt;             int         R                A function with argument of type int, long, or double
+LongFunction&lt;R&gt;         long
+DoubleFunction&lt;R&gt;         double
+Function&lt;T, R&gt;             T             R                A function with argument of type T
+BiFunction&lt;T, U, R&gt;     T,U         R                A function with arguments of types T and U
+UnaryOperator&lt;T&gt;         T             T                A unary operator on the type T
+BinaryOperator&lt;T&gt;         T,T         T                A binary operator on the type T
+</code></pre><h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="http://www.amazon.cn/Java-SE8-for-the-Really-Impatient-A-Short-Course-on-the-Basics-Horstmann-Cay-S/dp/0321927761/ref=sr_1_2" target="_blank" rel="external">Java SE8 for the Really Impatient</a></li>
+<li><a href="https://gist.github.com/nkcoder/50c115a96c4e67164580#file-java-8-stream-api-java" target="_blank" rel="external">Stream示例代码</a></li>
+</ul>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag">#java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/16/java-8-lambda-expression-guide/" rel="next" title="Java 8 Lambda表达式入门">
+                <i class="fa fa-chevron-left"></i> Java 8 Lambda表达式入门
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/01/31/java-8-date-time-api/" rel="prev" title="Java 8新的日期和时间API">
+                Java 8新的日期和时间API <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/my-avatar.png"
+               alt="nkcoder" />
+          <p class="site-author-name" itemprop="name">nkcoder</p>
+          <p class="site-description motion-element" itemprop="description">programming notes</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">78</span>
+              <span class="site-state-item-name">posts</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">4</span>
+              <span class="site-state-item-name">categories</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">34</span>
+              <span class="site-state-item-name">tags</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/nkcoder" target="_blank">
+                  
+                    <i class="fa fa-github"></i> GitHub
+                  
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator">
+            <i class="fa fa-angle-double-up"></i>
+          </div>
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-__u4ECEIterator_u5230Stream"><span class="nav-number">1.</span> <span class="nav-text">1. 从Iterator到Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-__u521B_u5EFAStream_u7684_u65B9_u5F0F"><span class="nav-number">2.</span> <span class="nav-text">2. 创建Stream的方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_Stream_u8F6C_u6362"><span class="nav-number">3.</span> <span class="nav-text">3. Stream转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_Stream_reduction"><span class="nav-number">4.</span> <span class="nav-text">4. Stream reduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1_Optional"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Optional</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2__u7B80_u5355_u7684reduction"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 简单的reduction</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3_reduce_u65B9_u6CD5"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 reduce方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-_collect_u7ED3_u679C"><span class="nav-number">5.</span> <span class="nav-text">5. collect结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-_Grouping_u548CPartitioning"><span class="nav-number">6.</span> <span class="nav-text">6. Grouping和Partitioning</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-_Primitive_Stream"><span class="nav-number">7.</span> <span class="nav-text">7. Primitive Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-_Parallel_Stream"><span class="nav-number">8.</span> <span class="nav-text">8. Parallel Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-_Functional_Interface"><span class="nav-number">9.</span> <span class="nav-text">9. Functional Interface</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u53C2_u8003"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator">
+            <i class="fa fa-angle-double-down"></i>
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+<div class="copyright" style="text-align: center;">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nkcoder</span>
+</div>
+
+<div style="text-align: center;">
+	<div class="powered-by">
+		Powered by <a class="theme-link" href="http://hexo.io">Hexo</a>
+	</div>
+
+	<div class="theme-info">
+	  Theme -
+	  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+		NexT.Mist
+	  </a>
+	</div>
+
+	<div style="display: inline-block; text-align: center;" >
+
+		<span style="padding: 0px 10px;"> | </span>
+		<span id="busuanzi_container_site_pv">
+			PV: &nbsp<u><span id="busuanzi_value_site_pv"></span></u> 次
+		</span>
+		<span style="padding: 0px 10px;"> | </span>
+	</div>
+
+	<div style="display: inline-block; text-align: center;">
+		<span id="busuanzi_container_site_uv">
+			UV: &nbsp<u><span id="busuanzi_value_site_uv"></span></u> 次
+		</span>
+	</div>
+</div>
+
+
+
+      </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  
+
+
+  
+
+
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=0.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=0.5.0"></script>
+
+
+
+  
+  
+
+  
+  
+<script type="text/javascript" src="/js/src/scrollspy.js?v=0.5.0"></script>
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 1 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = NexT.utils.escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    NexT.motion.middleWares.sidebar = function () {
+      var $tocContent = $('.post-toc-content');
+
+      if (CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          NexT.utils.displaySidebar();
+        }
+      }
+    };
+  });
+</script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=0.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'nkcoder';
+      var disqus_identifier = '2016/01/24/java-8-stream-api/';
+      var disqus_title = '使用Java 8中的Stream';
+      var disqus_url = 'http://nkcoder.github.io/2016/01/24/java-8-stream-api/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+
+  
+  
+
+  
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("K6inpJISDdhy84Q1nN8Byp6u-gzGzoHsz", "1XEgI254q7ArTiMH7FuWHsls");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+
+</body>
+</html>
