@@ -11,3 +11,5 @@ Class c2 = Employee.class;
 Employeee = new Employee();  
 Class c3 = e.getClass(); //c3是运行时类 (e的运行时类是Employee) 
 ```
+
+[java反射机制详解 及 Method.invoke解释](http://azrael6619.iteye.com/blog/429797)
