@@ -17,13 +17,13 @@
 * 点击 Create Pipeline之后，在 `GitHub Enterprise Settings` 中要勾选 `Build pull requests from third-party forked repositories` ，fork的repo也会跑这个build 
 
 > 详见图  
-![](setupBuildKite/96A3074A-750D-4062-BA2B-00286948331A.png)
+![](image/96A3074A-750D-4062-BA2B-00286948331A.png)
 
 ### 步骤2
 * 通过buildkite中的 `GitHub Enterprise Setup Instructions` 链接后，获得webhook地址
 * 在git的setting中设置点击 Add webhook 并给予下列权限
 
-![](setupBuildKite/DAE90A97-271F-4832-A9E5-0F7B7CBEDF48.png)
+![](image/DAE90A97-271F-4832-A9E5-0F7B7CBEDF48.png)
 * [Generating a new SSH key and adding it to the ssh-agent](https://help.github.com/enterprise/2.7/user/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)  通过  `ssh-keygen -t rsa -b 4096 -C “随意输入” -f “abc”` ，将abc.pub中的内容拷贝 `pbcopy < abc.pub` 
 * 并在Deploy keys中， `Add deploy key` ，将上一步拷贝的内容粘入
 
