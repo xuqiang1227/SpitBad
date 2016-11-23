@@ -182,3 +182,61 @@ last // 3
 ```javascript
 let { log, sin, cos } = Math;
 ```
+### 字符串的解构赋值
+字符串也可以解构赋值。这是因为此时，字符串被转换成了一个类似数组的对象。
+```javascript
+const [a, b, c, d, e, f] = 'hello'; // a = "h", b = "e", c = "l", d = "l", e = "o", f  = undefined
+```
+类似数组的对象都有一个length属性，因此还可以对这个属性解构赋值。
+```javascript
+let {length : len} = 'hello'; // len = 5
+```
+### 数值和布尔值的解构赋值 
+```javascript
+let {toString: s} = 123;
+s === Number.prototype.toString // true
+let {toString: s} = true;
+s === Boolean.prototype.toString // true
+//上面代码中，数值和布尔值的包装对象都有toString属性，因此变量s都能取到值。
+//解构赋值的规则是，只要等号右边的值不是对象，就先将其转为对象。由于undefined和null无法转为对象，所以对它们进行解构赋值，都会报错。
+```
+### 函数参数的解构赋值
+```javascript
+//函数add的参数表面上是一个数组，但在传入参数的那一刻，数组参数就被解构成变量x和y，相当于 function add(x,y)
+function add([x, y]){
+  return x + y;
+}
+add([1, 2]); // 3
+
+[[1, 2], [3, 4]].map(([a, b]) => a + b); // [3,7]
+```
+接下来要对比两个例子
+```javascript
+//例子1，这里 ({x=0,y=0} = {}) ，因为赋值为undefined所以x,y的默认值生效为0
+function move({x = 0, y = 0} = {}) {
+  return [x, y];
+}
+move({x: 3, y: 8}); // [3, 8]
+move({x: 3}); // [3, 0]
+move({}); // [0, 0]
+move(); // [0, 0]
+
+//例子2，这里({x,y} = {x:0,y:0}，默认先给x,y赋值为0，所以move()直接调用可以得到[0,0]，但是其他的只要赋值，就会按照赋值的来，并且没有默认值。)
+function move({x, y} = { x: 0, y: 0 }) {
+  return [x, y];
+}
+move({x: 3, y: 8}); // [3, 8]
+move({x: 3}); // [3, undefined]
+move({}); // [undefined, undefined]
+move(); // [0, 0]
+```
+map函数
+```javascript
+//undefined就会触发函数参数x的默认值。
+//map遍历中三个参数分别为 map(currentValue,index,array)
+//currentValue callback 的第一个参数，数组中当前被传递的元素。
+//index callback 的第二个参数，数组中当前被传递的元素的索引。
+//array callback 的第三个参数，调用 map 方法的数组。
+[1, undefined, 3].map((x = 'yes',y,z) => x);
+// [ 1, 'yes', 3 ]
+```
